@@ -124,21 +124,21 @@ The EHA ansatz covers $3nL$ parameters. It achieves $SU(2^n)$ universality when 
 
 QFM continuously interpolates between the paramagnetic ($g \ll 1$) and ferromagnetic ($g \gg 1$) ground states of $H = -\sum_{i} Z_i Z_{i+1} - g\sum_i X_i$. The learned trajectory crosses the critical point $g_c = 1$ with a sharp change in the fidelity convergence rate and magnetization order parameter $\langle M \rangle$.
 
-![TFIM Phase Transition](results/qfm_3d_energy_manifold.png)
+![TFIM Phase Transition](reports/qfm_3d_energy_manifold.png)
 *Figure 1. Left: 3D energy manifold along the QFM trajectory. Right: Phase portrait and spectral gap, identifying the quantum critical point.*
 
 ### 4.2 Quantum Optimal Transport Analysis
 
 QFM trajectories are compared directly against the Bures geodesic. We report the transport efficiency $\eta$ and mean deviation $\bar{\delta}$ from the geodesic.
 
-![Quantum OT Analysis](results/qfm_quantum_ot.png)
+![Quantum OT Analysis](reports/qfm_quantum_ot.png)
 *Figure 2. (a) Bures distance to target along QFM vs. geodesic. (b) Per-step action cost. (c) Benamou–Brenier kinetic energy. (d) Point-wise geodesic deviation.*
 
 ### 4.3 Convergence Bounds
 
 Empirical Lipschitz constants $L_\tau$ and Gronwall error bounds confirm the theoretical predictions. Power-law convergence $\mathcal{L}(t) \sim t^{-\alpha}$ fits better than exponential for early training ($R^2 = 0.79$ vs $0.44$).
 
-![Convergence Bounds](results/qfm_convergence_bounds.png)
+![Convergence Bounds](reports/qfm_convergence_bounds.png)
 *Figure 3. (a) Per-step Lipschitz constants. (b) Gronwall error bound vs. T. (c) Convergence rate fits. (d) Expressivity heatmap.*
 
 ### 4.4 Multi-Qubit Entanglement Scaling
@@ -151,14 +151,14 @@ QFM generates entanglement from separable initial states, targeting GHZ, W, and 
 | W-State | 0.971 | 0.943 | 0.882 |
 | Cluster | 0.964 | 0.931 | 0.875 |
 
-![Entanglement Scaling](results/qfm_entanglement_scaling.png)
+![Entanglement Scaling](reports/qfm_entanglement_scaling.png)
 *Figure 4. (a) Bipartite $S_E(\tau)$. (b) Entanglement generation rate. (c) GHZ/W fidelity vs N. (d) Mutual information curves.*
 
 ### 4.5 QFM vs. Classical Flow Matching
 
 We compare against a classical FM baseline (MLP on vectorized density matrices, following Lipman et al., 2022). QFM consistently achieves higher final fidelity under the same parameter budget.
 
-![Classical vs Quantum](results/qfm_classical_vs_quantum.png)
+![Classical vs Quantum](reports/qfm_classical_vs_quantum.png)
 *Figure 5. Head-to-head benchmark: training loss, fidelity curves, step-wise transport cost, and parameter efficiency.*
 
 ### 4.6 Error Mitigation on NISQ Hardware
@@ -171,7 +171,7 @@ SResults under depolarizing noise ($p = 0.02$ to $0.08$) with ZNE (Richardson ex
 | NISQ-Mid (T₁=200μs)  | 0.128 | 1.000 | 0.872 | 0.996 |
 | NISQ-Best (T₁=500μs) | 0.089 | 1.000 | 0.911 | 0.998 |
 
-![Error Mitigation](results/qfm_error_mitigation.png)
+![Error Mitigation](reports/qfm_error_mitigation.png)
 *Figure 6. (a) Ideal/noisy/ZNE fidelity curves. (b) Noise sweep. (c) CNOT heatmap. (d) Hardware noise profiles.*
 
 ### 4.7 Flow Geometry on the Bures Manifold
@@ -183,7 +183,7 @@ The QFM vector field has a non-trivial Riemannian geometry:
 - **Geometric phase** $\phi_\text{geo} \approx 0$ (near-trivial for non-cyclic paths)
 - **Coherent fraction** $\approx 0$: flow is predominantly *dissipative* — a TFIM ground state preparation requires open-system dynamics, not unitary evolution.
 
-![Flow Geometry](results/qfm_flow_geometry.png)
+![Flow Geometry](reports/qfm_flow_geometry.png)
 *Figure 7. Lindblad generator decomposition, flow speed, geodesic curvature vs. parallel transport deviation, sectional curvature.*
 
 ---
@@ -237,11 +237,11 @@ quantum_flow_matching/
 │   └── visualization/          # Plotting utilities
 │
 ├── scripts/
-│   ├── theory/                 # 20 analysis scripts → results/
+│   ├── theory/                 # 20 analysis scripts → reports/
 │   ├── benchmarks/             # Entanglement, ring-state, TFIM benchmarks
 │   └── comparisons/            # QFM vs diffusion, vs classical FM, circuit viz
 │
-├── results/                    # All generated figures (41 PNG/GIF)
+├── reports/                    # All generated figures (41 PNG/GIF)
 │
 ├── simulate_qfm.py             # Shared QFM training entry point
 ├── run_all_scripts.py          # Master runner (runs all 23+ scripts)
@@ -322,19 +322,19 @@ benchmark = h2_qfm_vs_vqe_benchmark([0.7, 1.0, 1.5, 2.0])
 ## 9. Reproducing All Figures
 
 ```bash
-# Run all 23 scripts (saves 41 figures to results/)
+# Run all 23 scripts (saves 41 figures to reports/)
 python run_all_scripts.py
 
 # Or run individual analyses
-python scripts/theory/analyze_quantum_ot.py        --qubits 2 --steps 10 --out results/
-python scripts/theory/analyze_convergence_bounds.py --qubits 2 --steps 10 --out results/
-python scripts/theory/analyze_error_mitigation.py  --qubits 1 --steps 8  --out results/
-python scripts/theory/analyze_entanglement_scaling.py              --out results/
-python scripts/theory/analyze_classical_vs_quantum.py --qubits 2  --out results/
-python scripts/theory/analyze_flow_geometry.py      --qubits 2 --steps 10 --out results/
-python scripts/theory/analyze_phase_transition.py   --qubits 2 --steps 10 --out results/
-python scripts/benchmarks/benchmark_tfim.py                        --out results/
-python scripts/comparisons/compare_advanced_viz.py                 --out results/
+python scripts/theory/analyze_quantum_ot.py        --qubits 2 --steps 10 --out reports/
+python scripts/theory/analyze_convergence_bounds.py --qubits 2 --steps 10 --out reports/
+python scripts/theory/analyze_error_mitigation.py  --qubits 1 --steps 8  --out reports/
+python scripts/theory/analyze_entanglement_scaling.py              --out reports/
+python scripts/theory/analyze_classical_vs_quantum.py --qubits 2  --out reports/
+python scripts/theory/analyze_flow_geometry.py      --qubits 2 --steps 10 --out reports/
+python scripts/theory/analyze_phase_transition.py   --qubits 2 --steps 10 --out reports/
+python scripts/benchmarks/benchmark_tfim.py                        --out reports/
+python scripts/comparisons/compare_advanced_viz.py                 --out reports/
 ```
 
 **Expected runtime:** ~5–10 min on CPU (M1/M2 Mac or modern x86). GPU not required.
