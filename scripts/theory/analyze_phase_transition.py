@@ -12,7 +12,7 @@ from mpl_toolkits.mplot3d import Axes3D
 from simulate_qfm import train_qfm_collect_all, COLORS
 from src.qfm.apps.tfim import build_tfim_hamiltonian
 
-def 3d_energy_manifold(rhos, g_values, n_qubits, output_dir):
+def energy_manifold_3d(rhos, g_values, n_qubits, output_dir):
     print("Generating Advanced 4-Panel 3D Energy Manifold Dashboard")
     energies, magnetizations_raw, thetas = [], [], []
     ground_energies, spectral_gaps, purities = [], [], []
@@ -209,7 +209,7 @@ def main():
     
     _, rhos, _, _, _, g_vals, nq, T = train_qfm_collect_all(n_qubits=args.qubits, T_steps=args.steps, M=args.ensemble)
 
-    3d_energy_manifold(rhos, g_vals, nq, args.out)
+    energy_manifold_3d(rhos, g_vals, nq, args.out)
     quantum_phase_portrait(rhos, g_vals, nq, args.out)
 
 if __name__ == "__main__":

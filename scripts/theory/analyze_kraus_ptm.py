@@ -30,11 +30,11 @@ def run_kraus_analysis(n_data=1, n_ancilla=1, n_layers=3, out_dir="results"):
     kraus_ops = kraus_from_unitary(U, n_data, n_ancilla)
     err = kraus_completeness_error(kraus_ops)
     print(f"Completeness Error: {err:.2e}")
-    R      = pauli_transfer_matrix(kraus_ops)
-    R_np   = R.numpy()
-    C      = choi_matrix(kraus_ops)
-    C_np   = C.detach().cpu().numpy()
-    chi    = chi_matrix(kraus_ops)
+    R = pauli_transfer_matrix(kraus_ops)
+    R_np = R.numpy()
+    C = choi_matrix(kraus_ops)
+    C_np = C.detach().cpu().numpy()
+    chi = chi_matrix(kraus_ops)
     chi_np = chi.detach().cpu().numpy()
     kraus_svs = []
     for i, K in enumerate(kraus_ops):
