@@ -1,7 +1,9 @@
 # Quantum Flow Matching (QFM)
 
 > **A Continuous Normalizing Flow Framework on the Bures Manifold of Density Matrices**
-
+[![Python 3.10+](https://img.shields.io/badge/Python-3.10+-blue.svg)](https://www.python.org/)
+[![PyTorch](https://img.shields.io/badge/PyTorch-2.0+-ee4c2c.svg)](https://pytorch.org/)
+[![PennyLane](https://img.shields.io/badge/PennyLane-0.38+-green.svg)](https://pennylane.ai/)
 
 ## Abstract
 
