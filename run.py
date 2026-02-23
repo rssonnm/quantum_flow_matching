@@ -1,5 +1,3 @@
-# Run for allll
-
 import subprocess
 import sys
 import os
@@ -27,21 +25,23 @@ def run(script_path, extra_args=None, cwd=None):
                                 capture_output=False, text=True)
         elapsed = time.time() - t0
         if result.returncode == 0:
-            print(f"{label} done ({elapsed:.1f}s)")
+            print(f"  ✅  {label} done ({elapsed:.1f}s)")
             return True
         else:
-            print(f"{label} failed (exit {result.returncode}) after {elapsed:.1f}s")
+            print(f"  ❌  {label} failed (exit {result.returncode}) after {elapsed:.1f}s")
             return False
     except subprocess.TimeoutExpired:
         print(f"  ⏱️  {label} timed out after 600s — skipping")
         return False
     except Exception as e:
-        print(f"{label} exception: {e}")
+        print(f"  ❌  {label} exception: {e}")
         return False
 
 
-# Theory block
-theory_scripts = [
+# ============================================================
+# 1. THEORY SCRIPTS (run from project root so simulate_qfm is found)
+# ============================================================
+THEORY_SCRIPTS = [
     # Existing analysis scripts  (args matched to each script's argparse)
     ("analyze_convergence_geometry.py",  ["--qubits", "2", "--steps", "10", "--ensemble", "8"]),
     ("analyze_dynamics_thermo.py",       []),   # only --out
@@ -66,8 +66,10 @@ theory_scripts = [
     ("analyze_flow_geometry.py",         ["--qubits", "2", "--steps", "10", "--ensemble", "8"]),
 ]
 
-
-bench_scripts = [
+# ============================================================
+# 2. BENCHMARK SCRIPTS
+# ============================================================
+BENCH_SCRIPTS = [
     ("benchmark_entanglement.py", []),
     ("benchmark_ring_state.py",   []),
     ("benchmark_tfim.py",         []),
@@ -76,7 +78,7 @@ bench_scripts = [
 # ============================================================
 # 3. COMPARISON SCRIPTS
 # ============================================================
-compare_scripts = [
+COMPARE_SCRIPTS = [
     ("compare_ot_cfm_comparison.py", []),
     ("compare_advanced_viz.py",      []),
     # compare_circuit_viz may require display; skip if needed
@@ -97,27 +99,27 @@ def main():
     for script_name, extra in THEORY_SCRIPTS:
         script_path = os.path.join(THEORY_DIR, script_name)
         if not os.path.isfile(script_path):
-            print(f"Skipping missing: {script_name}")
+            print(f"  ⚠️  Skipping missing: {script_name}")
             continue
         ok = run(script_path, extra_args=extra, cwd=BASE)
         (passed if ok else failed).append(script_name)
 
     # Benchmark scripts
     print("\n### BENCHMARK SCRIPTS ###")
-    for script_name, extra in bench_scripts:
+    for script_name, extra in BENCH_SCRIPTS:
         script_path = os.path.join(BENCH_DIR, script_name)
         if not os.path.isfile(script_path):
-            print(f"Skipping missing: {script_name}")
+            print(f"  ⚠️  Skipping missing: {script_name}")
             continue
         ok = run(script_path, extra_args=extra, cwd=BASE)
         (passed if ok else failed).append(script_name)
 
     # Comparison scripts
     print("\n### COMPARISON SCRIPTS ###")
-    for script_name, extra in compare_scripts:
+    for script_name, extra in COMPARE_SCRIPTS:
         script_path = os.path.join(COMPARE_DIR, script_name)
         if not os.path.isfile(script_path):
-            print(f"Skipping missing: {script_name}")
+            print(f"  ⚠️  Skipping missing: {script_name}")
             continue
         ok = run(script_path, extra_args=extra, cwd=BASE)
         (passed if ok else failed).append(script_name)
